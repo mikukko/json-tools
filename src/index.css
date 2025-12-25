@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 去掉Monaco Editor的focus边框 */
+.monaco-editor,
+.monaco-editor .overflow-guard,
+.monaco-editor .monaco-scrollable-element {
+  outline: none !important;
+}
+
+.monaco-editor-container:focus,
+.monaco-editor-container:focus-within {
+  outline: none !important;
+}
