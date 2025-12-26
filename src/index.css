@@ -13,3 +13,26 @@
 .monaco-editor-container:focus-within {
   outline: none !important;
 }
+
+/* Toast关闭按钮移到框内右侧 */
+[data-sonner-toast] button[data-close-button] {
+  position: absolute !important;
+  right: 12px !important;
+  left: auto !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  border: none !important;
+  background: transparent !important;
+  color: inherit !important;
+  opacity: 0.6;
+  cursor: pointer;
+}
+
+[data-sonner-toast] button[data-close-button]:hover {
+  opacity: 1;
+}
+
+/* 隐藏Monaco Editor移动端键盘图标 */
+.monaco-editor .iPadShowKeyboard {
+  display: none !important;
+}

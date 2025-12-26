@@ -1,6 +1,9 @@
 # JSON Tools
+https://json.mikukko.com
 
 一个简洁的在线 JSON 工具，支持格式化、压缩、转义等常用操作。
+
+![页面截图](docs/images/page.png)
 
 ## 功能
 
@@ -36,8 +39,19 @@ npm run build
 
 ### 使用预构建镜像
 
+提供两种架构的镜像：
+
+| 架构 | 镜像标签 | 适用场景 |
+|------|---------|---------|
+| x86_64 | `mikukko/json-tools:latest` | 大多数云服务器、Intel/AMD 设备 |
+| ARM64 | `mikukko/json-tools:arm64` | 树莓派、Apple Silicon、ARM 服务器 |
+
 ```bash
+# x86_64 架构
 docker run -d -p 8080:80 mikukko/json-tools:latest
+
+# ARM64 架构
+docker run -d -p 8080:80 mikukko/json-tools:arm64
 ```
 
 访问 http://localhost:8080
