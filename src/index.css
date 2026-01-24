@@ -36,3 +36,9 @@
 .monaco-editor .iPadShowKeyboard {
   display: none !important;
 }
+
+/* 允许移动端双指缩放 */
+.monaco-editor,
+.monaco-editor .overflow-guard {
+  touch-action: pan-x pan-y pinch-zoom !important;
+}
