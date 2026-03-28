@@ -1,6 +1,6 @@
 import { useState, useCallback, useRef, useEffect } from 'react'
 import Editor, { type Monaco } from '@monaco-editor/react'
-import { Braces, Minimize2, Quote, Trash2, Copy, Undo2, GripHorizontal, ArrowUp, Zap, Sun, Moon } from 'lucide-react'
+import { Braces, Minimize2, Quote, Trash2, Copy, Undo2, GripHorizontal, ArrowUp, Zap, Sun, Moon, TextWrap } from 'lucide-react'
 import { Toaster, toast } from 'sonner'
 
 function App() {
@@ -9,6 +9,10 @@ function App() {
   const [topHeight, setTopHeight] = useState(() => {
     const saved = localStorage.getItem('splitterRatio')
     return saved ? parseFloat(saved) : 50
+  })
+  const [wordWrap, setWordWrap] = useState(() => {
+    const saved = localStorage.getItem('wordWrap')
+    return saved ? saved === 'true' : false
   })
   const [isDarkMode, setIsDarkMode] = useState(() => {
     const saved = localStorage.getItem('darkMode')
@@ -160,6 +164,12 @@ function App() {
     localStorage.setItem('darkMode', newMode.toString())
   }
 
+  const toggleWordWrap = () => {
+    const newMode = !wordWrap
+    setWordWrap(newMode)
+    localStorage.setItem('wordWrap', newMode.toString())
+  }
+
   useEffect(() => {
     document.addEventListener('mousemove', handleMouseMove)
     document.addEventListener('mouseup', handleMouseUp)
@@ -193,17 +203,50 @@ function App() {
             JSON Tools
           </h1>
         </div>
-        <button
-          onClick={toggleDarkMode}
-          className={`flex items-center justify-center w-10 h-10 rounded-lg transition-colors ${
-            isDarkMode
-              ? 'bg-gray-700 hover:bg-gray-600 text-yellow-400'
-              : 'bg-gray-100 hover:bg-gray-200 text-gray-600'
-          }`}
-          title={isDarkMode ? '切换到浅色模式' : '切换到深色模式'}
-        >
-          {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
-        </button>
+        <div className="flex items-center gap-2">
+          <div className="relative group">
+            <button
+              onClick={toggleWordWrap}
+              className={`flex items-center justify-center w-10 h-10 rounded-lg transition-colors ${
+                wordWrap
+                  ? 'bg-blue-500 hover:bg-blue-600 text-white'
+                  : isDarkMode
+                    ? 'bg-gray-700 hover:bg-gray-600 text-gray-100'
+                    : 'bg-gray-100 hover:bg-gray-200 text-gray-600'
+              }`}
+              aria-label={wordWrap ? '关闭自动换行' : '开启自动换行'}
+            >
+              <TextWrap size={18} />
+            </button>
+            <div
+              className={`pointer-events-none absolute right-0 top-full z-20 mt-2 whitespace-nowrap rounded-md px-2 py-1 text-xs shadow-md opacity-0 translate-y-1 transition-all group-hover:opacity-100 group-hover:translate-y-0 ${
+                isDarkMode ? 'bg-gray-700 text-gray-100' : 'bg-gray-900 text-white'
+              }`}
+            >
+              {wordWrap ? '自动换行：已开启' : '自动换行：已关闭'}
+            </div>
+          </div>
+          <div className="relative group">
+            <button
+              onClick={toggleDarkMode}
+              className={`flex items-center justify-center w-10 h-10 rounded-lg transition-colors ${
+                isDarkMode
+                  ? 'bg-gray-700 hover:bg-gray-600 text-yellow-400'
+                  : 'bg-gray-100 hover:bg-gray-200 text-gray-600'
+              }`}
+              aria-label={isDarkMode ? '切换到浅色模式' : '切换到深色模式'}
+            >
+              {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
+            </button>
+            <div
+              className={`pointer-events-none absolute right-0 top-full z-20 mt-2 whitespace-nowrap rounded-md px-2 py-1 text-xs shadow-md opacity-0 translate-y-1 transition-all group-hover:opacity-100 group-hover:translate-y-0 ${
+                isDarkMode ? 'bg-gray-700 text-gray-100' : 'bg-gray-900 text-white'
+              }`}
+            >
+              {isDarkMode ? '切换到浅色模式' : '切换到深色模式'}
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* Input Area */}
@@ -224,7 +267,7 @@ function App() {
               scrollBeyondLastLine: false,
               automaticLayout: true,
               tabSize: 2,
-              wordWrap: 'on',
+              wordWrap: wordWrap ? 'on' : 'off',
               renderLineHighlight: 'none',
               renderLineHighlightOnlyWhenFocus: true,
               scrollbar: {
@@ -333,7 +376,7 @@ function App() {
               automaticLayout: true,
               tabSize: 2,
               readOnly: true,
-              wordWrap: 'off',
+              wordWrap: wordWrap ? 'on' : 'off',
               renderLineHighlight: 'none',
               scrollbar: {
                 vertical: 'auto',
