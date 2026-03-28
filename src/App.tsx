@@ -228,10 +228,10 @@ function App() {
               renderLineHighlight: 'none',
               renderLineHighlightOnlyWhenFocus: true,
               scrollbar: {
-                vertical: 'hidden',
-                horizontal: 'hidden',
-                verticalScrollbarSize: 0,
-                horizontalScrollbarSize: 0,
+                vertical: 'auto',
+                horizontal: 'auto',
+                verticalScrollbarSize: 10,
+                horizontalScrollbarSize: 10,
               },
             }}
           />
@@ -333,12 +333,13 @@ function App() {
               automaticLayout: true,
               tabSize: 2,
               readOnly: true,
+              wordWrap: 'off',
               renderLineHighlight: 'none',
               scrollbar: {
-                vertical: 'hidden',
-                horizontal: 'hidden',
-                verticalScrollbarSize: 0,
-                horizontalScrollbarSize: 0,
+                vertical: 'auto',
+                horizontal: 'auto',
+                verticalScrollbarSize: 10,
+                horizontalScrollbarSize: 10,
               },
             }}
           />
